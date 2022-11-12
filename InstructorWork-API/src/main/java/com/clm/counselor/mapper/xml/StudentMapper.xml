@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clm.counselor.mapper.StudentMapper">
+    <select id="queryUserAndStudent" parameterType="String" resultType="com.clm.vo.ResisterStudentVo">
+        SELECT
+        sys_user.username,
+        sys_user.real_name,
+        sys_user.id AS userId,
+        sys_user.`password`,
+        sys_user.salt,
+        sys_user.depart_id,
+        sys_user.depart_ids,
+        sys_user.sex,
+        sys_user.email,
+        sys_user.phone,
+        sys_user.`status`,
+        sys_user.user_identity,
+        sys_user.birthday,
+        sys_user.avatar,
+        student.id AS studentId,
+        student.address,
+        student.id_card,
+        student.guardian,
+        student.guardian_tel
+        FROM
+        student,
+        sys_user
+        where sys_user.id=student.user_id and sys_user.depart_id in
+        <foreach collection="departIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        and sys_user.del_flag=0
+        order by sys_user.username
+    </select>
+    <select id="queryUserAndStudentByRequirement" parameterType="String" resultType="com.clm.vo.ResisterStudentVo">
+        SELECT
+        sys_user.username,
+        sys_user.real_name,
+        sys_user.id AS userId,
+        sys_user.`password`,
+        sys_user.salt,
+        sys_user.depart_id,
+        sys_user.depart_ids,
+        sys_user.sex,
+        sys_user.email,
+        sys_user.phone,
+        sys_user.`status`,
+        sys_user.user_identity,
+        sys_user.birthday,
+        sys_user.avatar,
+        student.id AS studentId,
+        student.address,
+        student.id_card,
+        student.guardian,
+        student.guardian_tel
+        FROM
+        student,
+        sys_user
+        where ${ew.sqlSegment} and sys_user.id=student.user_id and sys_user.depart_id in
+        <foreach collection="departIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        and sys_user.del_flag=0
+        order by sys_user.username
+    </select>
+</mapper>

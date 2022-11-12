@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clm.system.mapper.SysDepartMapper">
+    <select id="queryUserDepart" parameterType="String" resultType="com.clm.system.entity.SysDepart">
+        select *from sys_depart where id
+        in(select dep_id from sys_user_depart where user_id=#{userId})
+    </select>
+   <update id="deleteBathDepartUserRelation">
+       delete from sys_user_depart
+       where dep_id in
+       <foreach collection="departIds" item="id" open="(" separator="," close=")">
+           #{id}
+       </foreach>
+   </update>
+</mapper>

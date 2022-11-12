@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clm.counselor.mapper.PunishmentMapper">
+    <select id="queryRevokePunishmentByCounselor" parameterType="String" resultType="com.clm.vo.PunishmentVo">
+        SELECT
+        punishment.id,
+        punishment.student_id,
+        punishment.user_id,
+        punishment.depart_id,
+        punishment.punishment_id,
+        punishment.approve_type,
+        punishment.is_revoke,
+        punishment.type,
+        punishment.objection,
+        punishment.prove,
+        punishment.approve_status,
+        punishment.reason,
+        punishment.counselor_opinion,
+        punishment.audit_opinion,
+        punishment.del_flag,
+        punishment.create_by,
+        punishment.create_time,
+        punishment.update_by,
+        punishment.update_time,
+        sys_user.username,
+        sys_user.real_name
+        FROM
+        punishment,
+        sys_user
+        WHERE sys_user.id=punishment.user_id and punishment.depart_id in
+        <foreach collection="departIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        and approve_type=1 and punishment.del_flag=0
+    </select>
+    <select id="queryRevokePunishmentCounselorRequirement" parameterType="String" resultType="com.clm.vo.PunishmentVo">
+        SELECT
+        punishment.id,
+        punishment.student_id,
+        punishment.user_id,
+        punishment.depart_id,
+        punishment.punishment_id,
+        punishment.approve_type,
+        punishment.is_revoke,
+        punishment.type,
+        punishment.objection,
+        punishment.prove,
+        punishment.approve_status,
+        punishment.reason,
+        punishment.counselor_opinion,
+        punishment.audit_opinion,
+        punishment.del_flag,
+        punishment.create_by,
+        punishment.create_time,
+        punishment.update_by,
+        punishment.update_time,
+        sys_user.username,
+        sys_user.real_name
+        FROM
+        punishment,
+        sys_user
+        WHERE sys_user.id= punishment.user_id and punishment.user_id in
+        <foreach collection="userIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        and approve_type=1 and punishment.del_flag=0
+    </select>
+</mapper>

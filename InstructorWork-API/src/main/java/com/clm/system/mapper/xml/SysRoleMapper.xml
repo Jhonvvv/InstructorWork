@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clm.system.mapper.SysRoleMapper">
+    <!-- 批量删除角色的与用户关系-->
+    <update id="deleteBathRoleUserRelation">
+        delete from sys_user_role
+        where role_id in
+        <foreach  collection="roleIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 批量删除角色的与权限关系-->
+    <update id="deleteBathRolePermissionRelation">
+        delete from sys_user_permission
+        where role_id in
+        <foreach  collection="roleIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

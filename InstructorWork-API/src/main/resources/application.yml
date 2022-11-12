@@ -1,0 +1,58 @@
+#服务端口
+server:
+  port: 8081
+#mybatis-plus
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:com/clm/*/mapper/xml/*.xml
+spring:
+  #应用名
+  application:
+    name: clm
+  profiles:
+    active: dev
+  #数据库
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/instructor?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 12345678
+    hikari:
+      idle-timeout: 180000
+      maximum-pool-size: 30
+      minimum-idle: 10
+      auto-commit: true
+      pool-name: ClmHikariCP
+      max-lifetime: 180000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  #返回json的全局时间格式
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    host: 47.102.202.189
+    port: 6379
+    database: 0
+    timeout: 1800000
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1
+        #最大阻塞等待时间(负数表示没限制)
+        max-idle: 8
+        min-idle: 0
+clm:
+  #本地
+  uploadType: OSS
+  path: /opt/avatar
+  #阿里云 OSS
+  oss:
+    accessKey: LTAI4Fv8PivEqka2GMQEXBY8
+    secretKey: YZSulquqsSjtQJk5ueyONaEjzzfo5K
+    endpoint: http://oss-cn-shanghai.aliyuncs.com
+    bucketName: mytravel
+
+
+
